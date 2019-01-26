@@ -34,3 +34,14 @@ void data_processing_thread()
 __`condition_variable::wait` does not wait at all if lambda passes(thus not wait forever if missed a single notification)___:
 1. It first checks the lambda, if true, keep going, if false, wait and release the lock
 2. When notified, it first acquired lock, then check lambda, if true, keep going, if false, release the lock and keep waiting.
+
+---
+### "Providers" of `std::future` / `std::shared_future`
+`std::async` informs by the return of function it launches.
+
+`std::packaged_task` informs by invoking `std::packed_tast::operator()`
+
+`std::promise` informs by `std::promise::set_value/set_exception`
+
+
+
