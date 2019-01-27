@@ -39,6 +39,13 @@ __`condition_variable::wait` does not wait at all if lambda passes(thus not wait
 ### "Providers" of `std::future` / `std::shared_future`
 `std::async` informs by the return of function it launches.
 
+_the dtor of std::future blocks in this case till the async job finishes_
+```cpp
+void f(){
+  std::future<void> fut = std::async(std::launch::async, [](){ /* compute */ });
+  // block here until thread spawned by std::async completes
+}
+```
 `std::packaged_task` informs by invoking `std::packed_tast::operator()`
 
 `std::promise` informs by `std::promise::set_value/set_exception`
