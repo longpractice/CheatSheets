@@ -8,7 +8,7 @@ Expand Var Value: `mkdir backup_${datum}_daily` "{}" needed when having none-spa
 
 Undefine Variable: `unset datum`
 
-`set -u` treat undef var as error, `set -x` show executed commands(debug purpose)
+`set -u` treat expanding undefed var as error, `set -x` show executed commands(debug purpose)
 
 Readonly: `ich=yang; readonly ich; #ich=jim # error!! #unset ich #error!!`
 
@@ -37,22 +37,22 @@ paste line by line: `paste namen.txt nummer.txt`
 
 `${#s}` length of string s,
 
-`${var#pattern}`remove left minimum pattern match,
+`${var#pattern}` remove left minimum pattern match,
 
-`${var##pattern}`remove left maximum pattern match,
+`${var##pattern}` remove left maximum pattern match,
 
-`${var%pattern}`remove right minimum patter match,
+`${var%pattern}` remove right minimum patter match,
 
-`${var%%pattern}`remove right maximum pattern match
+`${var%%pattern}` remove right maximum pattern match
 
-note that pattern is wildcard(*, ?, [])
+"pattern" is wildcard(*, ?, [])
 
-substring: `${var:start:len}`
+Substring: `${var:start:len}`
 
 ---
 Single quotes escape all special chars like backtick, backslack, dollar, brackets, star
 
-Bouble quotes escape all(including star) except dollar(var expanded), backslash(so the script itself is line-break, no effect on the string), backtick(command substitution)
+Bouble quotes escape all(including star) except dollar(var expanded), backslash(so the script itself is line-breaked, no effect on the string in double quotes), backtick(command substitution)
 
 ---
 ## Array
@@ -68,7 +68,7 @@ elements count in array `${#array[*]}`
 
 `unset array` undef whole array `unset array[1]` erase a certain element(elements behind shifted backward after erasing)
 
-copy array: `array_copy=(${array_source[*]})
+copy array: `array_copy=(${array_source[*]})`
 
 sub array: `${array[*]:1:2}` (specify start and lenght)
 
@@ -76,7 +76,7 @@ sub array: `${array[*]:1:2}` (specify start and lenght)
 
 ## Export or typeset -x
 
-none-exported var is not visible in subshell unless directly mensioned in command substitution, eg: `a=hello; h=$(echo $a; a=${a} god; echo $a); echo a`. Here h will be `hello god`. The last `echo` will still be "hello"(a visible in subshell in this case but modification of a does not affect parent shell here)
+none-exported var is not visible in subshell unless directly mensioned in command substitution, eg: `a=hello; h=$(echo $a; a="${a} god"; echo $a); echo a`. Here h will be `hello god`. The last `echo` will still be "hello"(a visible in subshell in this case but modification of a does not affect parent shell here)
 
 `export var` or `typeset -x var` will transitively make var visible in subshell
 
