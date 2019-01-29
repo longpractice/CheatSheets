@@ -55,7 +55,7 @@ assignment to basic type will not return a ref but the newly stored value.
 
 `bool compare_exchange_weak(bool expected, bool toSet)`: exchange with toSet if old stored value val equals to expected. Spurious failure(does not exchange even when condition met) will return false.
 
-``bool compare_exchange_strong(bool expected, bool toSet)`:
+`bool compare_exchange_strong(bool expected, bool toSet)`:
 similar to above but only fail when expected condition not met.
 
 
