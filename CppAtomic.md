@@ -24,11 +24,11 @@ For a certain memory location, when no race-condition, that is, in defined behav
 
 Eg: a read of an object that follows a write to that object in the same thread must either return the value written or another value that occurs later in the modification order.
 
-## std::atomic_flag
+## `std::atomic_flag`
 
-lock_free. must initialize with ATOMIC_FLAG_INIT. can not be copied, moved, assigned,copy-assigned by another var with same type(apply to all atomic types since these ops include two atomic types and cannot be done atomically).
+lock_free. must initialize with ATOMIC_FLAG_INIT. can not be copied, moved, assigned,copy-assigned by another var with same type(apply to all atomic types since these ops include two atomic types and cannot be done lock-freely atomically).
 
-Only two operations(one of them is destruction): clear, test_and_set.
+Only two operations: clear, test_and_set.
 
 Normally used as the build block of other type: 
 
@@ -47,11 +47,11 @@ public:
 }
 ```
 
-## std::atomic
+## all `std::atomic`
 
 assignment to basic type will not return a ref but the newly stored value.
 
-## std::atomic<bool>
+## `std::atomic<bool>`
 
 `bool compare_exchange_weak(bool expected, bool toSet)`: exchange with toSet if old stored value val equals to expected. Spurious failure(does not exchange even when condition met) will return false.
 
@@ -59,18 +59,18 @@ assignment to basic type will not return a ref but the newly stored value.
 similar to above but only fail when expected condition not met.
 
 
-## std::atomic<T*> pointer specialization
+## `std::atomic<T*>` pointer specialization
 
 read-modify-write atomic pointer arithmetric operations: 
 
 * fetch_add(), fetch_sub(): can have any of the memory-ordering tags 
 * , +=, -=, ++(pre and post), --(pre and post): always memory_order_seq_cst.
   
-## std::atomic integral type specialization
+## `std::atomic` integral type specialization
 
 all normal integral operations are available for atomic operation, except division, multiplication and shift.
 
-## std::atomic primary class template
+## `std::atomic` primary class template
 
 The requirement of base type:
 * memcpy copiable: must have trivial copy-assignment operator. (no virtual method or virtual base, must use the compiler-generated copy-assignment operator, all members must also have trivial copy-assignment operator). Copy assignment could be applied by memcpy.
