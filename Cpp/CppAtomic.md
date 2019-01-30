@@ -26,7 +26,7 @@ Eg: a read of an object that follows a write to that object in the same thread m
 
 ## `std::atomic_flag`
 
-lock_free. must initialize with ATOMIC_FLAG_INIT. can not be copied, moved, assigned,copy-assigned by another var with same type(apply to all atomic types since these ops include two atomic types and cannot be done lock-freely atomically).
+lock_free. must initialize with ATOMIC_FLAG_INIT. can not be copied, moved, assigned,copy-assigned by another var with same type(this applies to all atomic types since these ops include two atomic types and cannot be done lock-freely atomically).
 
 Only two operations: clear, test_and_set.
 
@@ -49,7 +49,7 @@ public:
 
 ## all `std::atomic`
 
-assignment to basic type will not return a ref but the newly stored value.
+assignment to base type will not return a ref of atomic type but the newly stored base type value.
 
 ## `std::atomic<bool>`
 
@@ -58,6 +58,7 @@ assignment to basic type will not return a ref but the newly stored value.
 `bool compare_exchange_strong(bool expected, bool toSet)`:
 similar to above but only fail when expected condition not met.
 
+When a compare-and-exchange is in a loop, the weak version will yield better performance on some platforms. When a weak compare-and-exchange would require a loop and a strong one would not, the strong one is preferable.
 
 ## `std::atomic<T*>` pointer specialization
 
