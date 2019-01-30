@@ -45,4 +45,37 @@ set `data`
 echo "$3.$2.$6 um $4"
 ```
 
+## Default args
+
+"null" below means empty string
+
+---
+use default if undefined/null
+
+`${var:-wort}` if var is undefined/null return wort; otherwise, return var
+
+`${var-wort}` if var is undefined return wort; otherwise, return var 
+
+---
+use alternative is defined/not null
+
+`${var:+wort}` if var is undefined/null return null; otherwise, return wort
+
+`${var+wort}` if var is undefined return null; otherwise, return wort
+
+---
+set and return if undefined/null
+
+`${var:=wort}` if var is undefined, set var to wort and return wort; otherwise var
+
+`${var=wort}` if var is undefined, set var to wort and return wort; otherwise return var
+
+---
+report error if undefined/null
+
+`${var:?wort}` if var is undefined/null, report error msg wort, return null. Otherwise return var
+
+`${var?wort}` if var is undefined, report error msg wort, return null; otherwise return var.
+
+
 
